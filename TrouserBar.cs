@@ -52,7 +52,6 @@ public class TrouserBar : MonoBehaviour
     {
         trouserLevel = Vector3.Distance(rFoot.transform.position, lFoot.transform.position);
 
-        //break check
         if (Vector3.Distance(rFoot.transform.position, lFoot.transform.position) > maxDistance && restart_once)
         {
             restart_once = false;

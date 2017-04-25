@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadNextLevelOnAnyKey : MonoBehaviour {
+public class LoadNextLevelOnAnyKey : MonoBehaviour
+{
 
-	void Update () {
-		if (Input.anyKeyDown)
+    void Update()
+    {
+        if (Input.anyKeyDown)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-	}
+    }
 }

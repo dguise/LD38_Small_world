@@ -18,7 +18,7 @@ public class moving_unit_script : MonoBehaviour
     AudioClip[] crashSounds;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         target1 = transform.parent.FindChild("target1").gameObject;
         target2 = transform.parent.FindChild("target2").gameObject;
@@ -29,7 +29,7 @@ public class moving_unit_script : MonoBehaviour
 
         idle_timer = idle_delay;
     }
-	
+
     private void FixedUpdate()
     {
         //movement towards target
@@ -89,7 +89,6 @@ public class moving_unit_script : MonoBehaviour
                 GameObject.Find("LevelPopup").GetComponent<PopupText>().SpawnRandomPopup();
             }
 
-            //remove
             Destroy(gameObject);
         }
     }

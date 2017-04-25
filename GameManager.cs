@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     bool restart_once = true;
     bool music_started = false;
-    float music_delay_timer=0;
+    float music_delay_timer = 0;
     float music_delay = 2;
 
     public int points
@@ -32,46 +33,38 @@ public class GameManager : MonoBehaviour {
         }
     }
     [SerializeField]
-    //private int _points = 100;
     public int _points = 100;
     Text pointsUi;
 
-	// Use this for initialization
-	void Start ()
+    void Start()
     {
         pointsUi = GameObject.Find("Points").GetComponent<Text>();
         pointsUi.text = "€ " + _points;
         pointsUi.color = Color.white;
 
-        if(SceneManager.GetActiveScene().name=="level1" || SceneManager.GetActiveScene().name == "level3")
+        if (SceneManager.GetActiveScene().name == "level1" || SceneManager.GetActiveScene().name == "level3")
         {
             music_delay_timer = music_delay;
-
-            //GameObject music_go = GameObject.Find("music_sak");
-            //music_go.GetComponent<AudioSource>().Stop();
-
-            
-            //music_go.GetComponent<AudioSource>().Play();
         }
     }
 
     private void FixedUpdate()
     {
-        if(music_delay_timer>0)
+        if (music_delay_timer > 0)
         {
             music_delay_timer -= Time.fixedDeltaTime;
             if (music_delay_timer < 0) music_delay_timer = 0;
             //reduce volume
             GameObject music_go = GameObject.Find("music_sak");
-            music_go.GetComponent<AudioSource>().volume = music_delay_timer/ music_delay;
+            music_go.GetComponent<AudioSource>().volume = music_delay_timer / music_delay;
 
-            if (music_delay_timer==0)
+            if (music_delay_timer == 0)
             {
                 //start music
                 music_go.GetComponent<AudioSource>().Stop();
                 music_go.GetComponent<AudioSource>().volume = 1;
 
-                if(SceneManager.GetActiveScene().name == "level1")
+                if (SceneManager.GetActiveScene().name == "level1")
                     music_go.GetComponent<AudioSource>().clip = music_go.GetComponent<music_script>().sound_music1;
                 if (SceneManager.GetActiveScene().name == "level3")
                     music_go.GetComponent<AudioSource>().clip = music_go.GetComponent<music_script>().sound_music2;

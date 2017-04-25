@@ -8,7 +8,7 @@ public class HowTo : MonoBehaviour
 
     Text uiText;
     GameObject loadedObject;
-    
+
     void Start()
     {
         // Runs when this object is created

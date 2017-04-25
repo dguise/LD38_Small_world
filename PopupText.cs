@@ -1,24 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PopupText : MonoBehaviour {
+public class PopupText : MonoBehaviour
+{
     Text uiText;
     GameObject popup;
 
     Color startColor = new Color(255, 255, 255, 0);
     Color endColor = new Color(255, 255, 255, 1);
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         uiText = GetComponent<Text>();
         popup = Resources.Load<GameObject>("Prefabs/RandomPopup");
-        // Sets the name text of the popup
-        //Popup(SceneManager.GetActiveScene().name);
 
-        string text_on_screen="Unknown Level";
+        string text_on_screen = "Unknown Level";
         if (SceneManager.GetActiveScene().name == "level1") text_on_screen = "1. Nature Calls";
         if (SceneManager.GetActiveScene().name == "level2") text_on_screen = "2. First Line of Defence";
         if (SceneManager.GetActiveScene().name == "level3") text_on_screen = "3. The Outer Shell";
@@ -45,7 +43,8 @@ public class PopupText : MonoBehaviour {
     private IEnumerator FadeIn()
     {
         float timestamp = 0;
-        do {
+        do
+        {
             timestamp += Time.deltaTime;
             uiText.color = Color.Lerp(startColor, endColor, timestamp);
             yield return new WaitForEndOfFrame();
@@ -62,7 +61,7 @@ public class PopupText : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         } while (uiText.color != startColor);
     }
-    
+
     public void SpawnRandomPopup()
     {
         Instantiate(popup, transform);

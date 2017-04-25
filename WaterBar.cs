@@ -1,28 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class WaterBar : MonoBehaviour {
+public class WaterBar : MonoBehaviour
+{
     GameObject waterBar;
     Image warningSign;
     public float maxWater = 2;
-    
+
 
     private float _waterLevel;
-    public float waterLevel {
+    public float waterLevel
+    {
         get
         {
             return _waterLevel;
-        } set
+        }
+        set
         {
             _waterLevel = value;
 
             var scale = waterBar.transform.localScale;
             scale.x = Mathf.Clamp(_waterLevel / maxWater, 0, 1);
 
-            if(scale.x > 0.7f)
+            if (scale.x > 0.7f)
             {
                 warningSign.enabled = true;
-            } else
+            }
+            else
             {
                 warningSign.enabled = false;
             }
@@ -31,15 +35,16 @@ public class WaterBar : MonoBehaviour {
         }
     }
 
-	void Start () {
+    void Start()
+    {
         waterBar = transform.FindChild("WaterBar").gameObject;
         warningSign = transform.FindChild("WarningSign").GetComponent<Image>();
-	}
+    }
 
     private void Update()
     {
-        if(waterLevel>0)
-         waterLevel -= 0.05f;
+        if (waterLevel > 0)
+            waterLevel -= 0.05f;
         if (waterLevel < 0) waterLevel = 0;
     }
 }

@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RandomPopupText : MonoBehaviour {
+public class RandomPopupText : MonoBehaviour
+{
     Text uiText;
 
     Color startColor = new Color(255, 255, 255, 0);
@@ -53,8 +54,8 @@ public class RandomPopupText : MonoBehaviour {
 
     };
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         uiText = GetComponent<Text>();
         uiText.text = sentences[Random.Range(0, sentences.Length)];
         uiText.fontSize = Random.Range(10, 20);

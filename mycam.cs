@@ -14,35 +14,33 @@ public class mycam : MonoBehaviour
     private bool do_once = true;
     private float sound_warning_delay1 = 0.5f;
     private float sound_warning_delay2 = 0.3f;
-    private float sound_warning_timer =0;
-    public float pants_hp= 1;
+    private float sound_warning_timer = 0;
+    public float pants_hp = 1;
 
     public AudioClip sound_fallen;
     public AudioClip sound_lean_warning;
     public AudioClip sound_stomp;
 
-    // Use this for initialization
-    void Start ()
+    void Start()
     {
         leg_left = GameObject.Find("Leg_left");
         leg_right = GameObject.Find("Leg_right");
         cam = Camera.main;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    void Update()
     {
-        if(have_fallen)
+        if (have_fallen)
         {
             //move cam to floor
-            if (cam.transform.position.y>2)
+            if (cam.transform.position.y > 2)
             {
                 Vector3 cam_pos1 = cam.transform.position;
                 cam_pos1.y -= 0.5f;
                 cam.transform.position = cam_pos1;
 
                 //impact sound
-                if(cam.transform.position.y<=2)
+                if (cam.transform.position.y <= 2)
                 {
                     GetComponent<AudioSource>().PlayOneShot(sound_stomp);
                 }
@@ -83,7 +81,7 @@ public class mycam : MonoBehaviour
             {
                 lean_value -= lean_sens * leg_dist;
             }
-            if(leg_left.GetComponent<movement>().on_floor && leg_right.GetComponent<movement>().on_floor)
+            if (leg_left.GetComponent<movement>().on_floor && leg_right.GetComponent<movement>().on_floor)
             {
                 //un-lean
                 if (lean_value < 0) lean_value += lean_sens * 10;
@@ -97,7 +95,7 @@ public class mycam : MonoBehaviour
             if (lean_value > lean_tol_warning || lean_value < -lean_tol_warning)
             {
                 //play sound
-                if(sound_warning_timer==0)
+                if (sound_warning_timer == 0)
                 {
                     //set audio speed
                     if (lean_value > lean_tol_warning2 || lean_value < -lean_tol_warning2)
@@ -123,11 +121,11 @@ public class mycam : MonoBehaviour
 
             //fall test
             float lean_tol_max = 0.3f;
-            if(lean_value> lean_tol_max)
+            if (lean_value > lean_tol_max)
             {
                 lean_value = lean_tol_max;
 
-                if(!have_fallen)
+                if (!have_fallen)
                 {
                     have_fallen = true;
 
@@ -153,14 +151,14 @@ public class mycam : MonoBehaviour
 
             //set rotation of cam
             Vector3 rot_ang = cam.transform.localEulerAngles;
-            cam.transform.localEulerAngles = new Vector3(90-90 * lean_value, 90, 90);
+            cam.transform.localEulerAngles = new Vector3(90 - 90 * lean_value, 90, 90);
 
             //update hud lean bar...
         }
 
 
         Vector3 cam_pos = cam.transform.position;
-        Vector3 cam_target_pos = (leg_left.transform.position+leg_right.transform.position)/2;
+        Vector3 cam_target_pos = (leg_left.transform.position + leg_right.transform.position) / 2;
 
         //shift target in front of legs
         cam_target_pos.z += 7;
@@ -171,7 +169,7 @@ public class mycam : MonoBehaviour
         //move towards camera target
         float dead_zone = 0.1f;
         float move_sens = 0.02f;
-        if(cam.transform.position.x > cam_target_pos.x + dead_zone ||
+        if (cam.transform.position.x > cam_target_pos.x + dead_zone ||
            cam.transform.position.x < cam_target_pos.x - dead_zone ||
            cam.transform.position.z > cam_target_pos.z + dead_zone ||
            cam.transform.position.z < cam_target_pos.z - dead_zone)
@@ -184,7 +182,7 @@ public class mycam : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(sound_warning_timer>0)
+        if (sound_warning_timer > 0)
         {
             sound_warning_timer -= Time.fixedDeltaTime;
             if (sound_warning_timer < 0) sound_warning_timer = 0;
@@ -194,7 +192,7 @@ public class mycam : MonoBehaviour
     private bool points_added = false;
     private void OnTriggerEnter(Collider col)
     {
-        if(col.tag=="is_goal")
+        if (col.tag == "is_goal")
         {
             if (SceneManager.GetActiveScene().name == "level4")
             {
@@ -203,14 +201,14 @@ public class mycam : MonoBehaviour
                 bab.GetComponent<Rigidbody>().AddTorque((Vector3.right + Vector3.up) * 1000);
             }
 
-            if(!points_added)
+            if (!points_added)
             {
                 points_added = true;
                 GameObject.Find("point_counter").GetComponent<point_count_script>().points_sum += Camera.main.GetComponent<GameManager>()._points;
                 Debug.Log(GameObject.Find("point_counter").GetComponent<point_count_script>().points_sum);
 
             }
-            
+
             StartCoroutine(FadeOut(false));
         }
     }
